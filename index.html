@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="Tone.js"></script>
+<style>
+
+</style>
+</head>
+<body>
+
+<script>
+
+var keys = new Tone.PolySynth(4, Tone.Sampler, {
+        "son1" : "hh.mp3",
+        "son2" : "hho.mp3",
+        "son3" : "kick.mp3",
+        "son4" : "snare.mp3",
+    }, {
+        "volume" : -10,
+    }).toMaster();
+
+var noteNames = ['son1', 'son2', 'son3', 'son4'];
+
+// step sequencer matrix
+var matrix = [
+    [1, 0, 0, 0],
+    [1, 0, 1, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 1, 0, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 1, 0],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+];
+
+var loop = new Tone.Sequence(function(time, col){
+    var column = matrix[col];
+    for (var i = 0; i < 4; i++){
+        if (column[i] === 1){
+            keys.triggerAttackRelease(noteNames[i], "32n", time);
+        }
+    }
+}, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], "16n");
+
+Tone.Transport.start();
+
+// wait for mp3 to load
+setTimeout(function(){ loop.start(); }, 300)
+
+</script>
+</body>
+</html>
