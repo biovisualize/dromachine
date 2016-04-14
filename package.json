@@ -1,0 +1,22 @@
+{
+  "name": "dromachine",
+  "version": "1.0.0",
+  "description": "Lorsque les dromadaires jouent de la percussion",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/biovisualize/dromachine.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/biovisualize/dromachine/issues"
+  },
+  "homepage": "https://github.com/biovisualize/dromachine#readme",
+  "dependencies": {
+    "tone": "^0.6.1"
+  }
+}
