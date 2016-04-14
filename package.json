@@ -17,6 +17,10 @@
   },
   "homepage": "https://github.com/biovisualize/dromachine#readme",
   "dependencies": {
+    "d3": "^3.5.16",
     "tone": "^0.6.1"
+  },
+  "devDependencies": {
+    "livereload": "^0.4.1"
   }
 }
