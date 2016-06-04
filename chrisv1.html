@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="utf-8">
-<script src="node_modules/d3/d3.js"></script>
-<script src="node_modules/tone/build/Tone.js"></script>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="https://tonejs.github.io/CDN/latest/Tone.min.js"></script>
 <style>
 
 </style>
@@ -13,10 +13,10 @@
 <script>
 
 var keys = new Tone.PolySynth(4, Tone.Sampler, {
-        "son1" : "hh.mp3",
-        "son2" : "hho.mp3",
-        "son3" : "kick.mp3",
-        "son4" : "snare.mp3",
+        "son1" : "https://raw.githubusercontent.com/Tonejs/Tone.js/master/examples/audio/505/hh.mp3",
+        "son2" : "https://raw.githubusercontent.com/Tonejs/Tone.js/master/examples/audio/505/hho.mp3",
+        "son3" : "https://raw.githubusercontent.com/Tonejs/Tone.js/master/examples/audio/505/kick.mp3",
+        "son4" : "https://raw.githubusercontent.com/Tonejs/Tone.js/master/examples/audio/505/snare.mp3",
     }, {
         "volume" : -10,
     }).toMaster();
@@ -24,7 +24,7 @@ var keys = new Tone.PolySynth(4, Tone.Sampler, {
 var noteNames = ['son1', 'son2', 'son3', 'son4'];
 
 var loop = new Tone.Sequence(function(time, col){
-    var column = d3.range(4).map(function(d){ return ~~(Math.random()*Math.random()*4); });
+    var column = d3.range(4).map(function(d){ return ~~(Math.random()*Math.random()*10); });
     for (var i = 0; i < 4; i++){
         if (column[i] === 1){
             keys.triggerAttackRelease(noteNames[i], [8, 16, 32, 64][~~(Math.random()*4)] + "n", time);
@@ -32,9 +32,60 @@ var loop = new Tone.Sequence(function(time, col){
     }
 }, d3.range(16), "16n");
 
+var mainSequence = [
+    [1, 0, 0, 0],
+    [1, 0, 1, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 1, 0, 1],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 0, 1, 0],
+    [0, 1, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+];
+var loop2 = new Tone.Sequence(function(time, col){
+    var column = mainSequence[col];
+    column = column.map(function(d){ return (~~(Math.random()*1.5)) ? 0 : d; })
+    for (var i = 0; i < 4; i++){
+        if (column[i] === 1){
+            keys.triggerAttackRelease(noteNames[i], [32, 64][~~(Math.random()*2)] + "n", time);
+        }
+    }
+}, d3.range(16), "16n");
+
+var mainSequence2 = [
+    [1, 0, 0, 1],
+    [1, 0, 1, 0],
+    [1, 0, 0, 0],
+    [1, 0, 0, 0],
+    [0, 1, 0, 1],
+    [1, 0, 0, 0],
+    [1, 0, 1, 0],
+    [1, 0, 0, 0]
+];
+var loop3 = new Tone.Sequence(function(time, col){
+    var column = mainSequence2[col];
+    for (var i = 0; i < 4; i++){
+        if (column[i] === 1){
+            keys.triggerAttackRelease(noteNames[i], [32, 64][~~(Math.random()*2)] + "n", time);
+        }
+    }
+}, d3.range(8), "8n");
+
 Tone.Transport.start();
 
-setTimeout(function(){ loop.start(); }, 300)
+setTimeout(function(){
+    loop.start();
+    loop2.start();
+    loop3.start();
+}, 300)
 
 </script>
 </body>
