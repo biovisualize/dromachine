@@ -23,9 +23,7 @@ const subdivision = 2
 <template>
     <div class="m-4">
         <input type="number" v-model="value" max="15" min="0"
-               class="hidden shadow appearance-none border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-
-        <!--                <cell :nbrOfSound="nbrOfSound" :size="600" :subdivisions="subdivision" :value="value"></cell>-->
+               class="shadow appearance-none border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
 
         <div>2 <sup>{{ 4 }}</sup></div>
         <div class="grid grid-cols-4 mb-4" style="width: 420px">
