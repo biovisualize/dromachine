@@ -1,54 +1,70 @@
 <script setup>
-import {ref} from 'vue'
-import Cell from './Cell.vue'
+import {computed, ref} from 'vue'
 
-defineProps({
-    msg: String,
+const props = defineProps({
+    values: {
+        type: Array,
+        required: true
+    },
+    nbrOfSound: {
+        type: Number,
+        default: 2,
+    },
+    subdivision: {
+        type: Number,
+        default: 4,
+    },
+    cellSize: {
+        type: Number,
+        default: 40,
+    },
+    actualValue: {
+        type: Number,
+        required: true,
+    },
+    colors: {
+        type: Array,
+        default: () => [
+            'black',
+            'yellow',
+            'red',
+            'blue',
+            'green',
+        ]
+    }
 })
 
-const value = ref(0)
-const nbrOfSound = ref(4);
-const subdivision = 2
+const cells = computed(() => {
+    return props.values.map((value) => {
+        return value
+    })
+})
 
-// setInterval(function () {
-//     value.value += 1
-//
-//     if (value.value === (nbrOfSound ** subdivision)) {
-//         value.value = 0
-//     }
-// }, 250);
-
+const matrix = computed(() => {
+    return cells.value.map((value) => {
+        const convertedNumber = value.toString(props.nbrOfSound)
+        return convertedNumber.padStart(props.subdivision, '0').split('')
+    })
+})
 </script>
 
 <template>
-    <div class="m-4">
-        <input type="number" v-model="value" max="15" min="0"
-               class="shadow appearance-none border border-red-500 rounded py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
-
-        <div>2 <sup>{{ 4 }}</sup></div>
-        <div class="grid grid-cols-4 mb-4" style="width: 420px">
-            <cell v-for="value in [...Array((2**4) ).keys()]" :nbrOfSound="4" :subdivisions="2" :value="value"
-                  :key="value"></cell>
-        </div>
-
-        <div>3 <sup>{{ 3 }}</sup></div>
-        <div class="grid grid-cols-9 mb-4">
-            <cell v-for="value in [...Array((3**3) ).keys()]" :nbrOfSound="3" :subdivisions="3" :value="value"
-                  :key="value"></cell>
-        </div>
-
-        <div>3 <sup>{{ 4 }}</sup></div>
-        <div class="grid grid-cols-8">
-            <cell v-for="value in [...Array((4**3) ).keys()]" :nbrOfSound="4" :subdivisions="3" :value="value"
-                  :key="value"></cell>
-        </div>
-
-        <div v-for="partition in [...Array(7).keys()]" :key="'p'+ partition" class="mt-8">
-            <div>2 <sup>{{ partition + 1 }}</sup></div>
-            <div class="grid grid-cols-8">
-                <cell v-for="value in [...Array(2** (partition + 1)).keys()]" :subdivisions="partition + 1"
-                      :value="value" :key="value"></cell>
-            </div>
-        </div>
+    <div class="mt-4">
+<!--        <span class="text-gray-50">-->
+<!--            [{{ nbrOfSound }}]-->
+<!--        </span>-->
+        <svg :width="cellSize * subdivision + (cellSize * 2)" :height="cellSize * (nbrOfSound ** subdivision)">
+            <circle :cx="cellSize" :cy="(cellSize * actualValue) + (cellSize / 2)" :r="cellSize / 3" fill="white"/>
+            <g v-for="(row, index) in matrix" :key="index">
+                <rect v-for="(cell, index2) in row" :key="index + '-' + index2"
+                      :width="cellSize"
+                      :height="cellSize"
+                      stroke="#eee"
+                      :x="cellSize * index2 + (cellSize * 2)"
+                      :y="cellSize * index"
+                      :fill="this.colors[cell]"
+                />
+            </g>
+        </svg>
     </div>
 </template>

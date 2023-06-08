@@ -6,13 +6,18 @@ export default {
             type: Boolean,
             default: false,
         },
-        nbrOfSound: {
-            type: Number,
-            default: 2,
+        isPlaySound: {
+            type: Boolean,
+            default: false,
         },
+
         speed: {
             type: Number,
             default: 1000,
+        },
+        nbrOfSound: {
+            type: Number,
+            default: 2,
         },
         subdivision: {
             type: Number,
@@ -35,6 +40,14 @@ export default {
         displayValue: {
             type: Boolean,
             default: false,
+        },
+        displayInfos: {
+            type: Boolean,
+            default: true,
+        },
+        displayMatrix: {
+            type: Boolean,
+            default: true,
         },
         colors: {
             type: Array,
@@ -98,6 +111,10 @@ export default {
         }
     },
 
+    mounted: function() {
+        this.calculatePoints()
+    },
+
     watch: {
         value: {
             handler() {
@@ -111,7 +128,9 @@ export default {
 
     methods: {
         play(sound, index) {
-            this.audios[sound - 1][index].play();
+            if (this.isPlaySound) {
+                this.audios[sound - 1][index].play();
+            }
         },
         playMetronome() {
             this.metronomes[this.value % 2].play();
@@ -153,7 +172,7 @@ export default {
 
 <template>
     <div class="bg-gray-900 p-8 m-8">
-        <div class="text-white">
+        <div class="text-white" v-if="displayInfos">
             <div class="m-2 text-center mb-4">Nbr de sons: {{ nbrOfSound }}</div>
             <div class="m-2 text-center mb-4">Subdivision: {{ subdivision }}</div>
             <div class="m-2 text-center mb-8">Nbr de possibilités: {{ possibilities }}</div>
@@ -161,8 +180,8 @@ export default {
             <div class="m-2 hidden">Nombre de son: {{ nbrOfSound }}</div>
             <div class="m-2 hidden">Subdivision: {{ subdivision }}</div>
         </div>
-        <div class="text-center text-white">
-            <svg :width="width" :height="height" class="rounded-lg" style="border: solid white 1px;">
+        <div class="text-white">
+            <svg :width="width" :height="height" class="rounded-lg">
                 <text fill="white" v-if="displayValue" :x="textX" :y="textY" :font-size="fontSize"
                       dominant-baseline="middle"
                       text-anchor="middle"
@@ -173,12 +192,12 @@ export default {
                 <circle v-for="point in points" :key="point.id" :cx="point.x" :cy="point.y" :r="size / 15"
                         :fill="point.fill"/>
 
-                <rect v-for="square in squares" stroke="#555" :key="square.index" :x="square.x" :y="square.y"
+                <rect  v-for="square in squares" stroke="#555" :key="square.index" :x="square.x" :y="square.y"
                       :height="size / 15" :width="size / 15"
                       :fill="square.fill"/>
             </svg>
         </div>
-        <div class="m-2 text-center text-white" style="font-family: monospace; font-size: 18px;">
+        <div v-if="displayMatrix" class="m-2 text-center text-white" style="font-family: monospace; font-size: 18px;">
             {{ matrix.reverse().join(' ') }}
         </div>
     </div>

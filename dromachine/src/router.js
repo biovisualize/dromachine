@@ -8,6 +8,14 @@ export default createRouter({
             path: '/',
             component: () => import('./pages/SimpleRound.vue'),
         },
+        {
+            path: '/random',
+            component: () => import('./pages/Random.vue'),
+        },
+        {
+            path: '/SoundsAndSubdivision',
+            component: () => import('./pages/SoundsAndSubdivision.vue'),
+        },
         // {
         //     path: '/',
         //     component: () => import('./pages/Home.vue'),

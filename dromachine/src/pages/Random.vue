@@ -1,5 +1,5 @@
 <script setup>
-import {ref} from "vue";
+import {computed, ref} from "vue";
 import {range} from 'lodash'
 import Cell from '../components/Cell.vue'
 import Partition from "../components/Partition.vue";
@@ -20,8 +20,6 @@ audios.push(range(0, subdivision.value).map(() => {
 audios.push(range(0, subdivision.value).map(() => {
     return new Audio('/sounds/snare.mp3')
 }))
-
-console.log(audios)
 
 const metronomes = [
     new Audio('/sounds/hh.mp3'),
@@ -46,17 +44,25 @@ const startOrStop = () => {
     }
 }
 
-
 const reset = () => {
     value.value = 0
     clearInterval(timer.value)
     timer.value = 0
 }
 
+const randomNumbers = computed(() => {
+    const possibilities = nbrOfSound.value ** subdivision.value
+    return Array.from({length: nbrOfSound.value}, () => Math.floor(Math.random() * possibilities));
+
+    return Math.floor(Math.random() * possibilities);
+})
+
+
 </script>
 
 <template>
     <div class="m-auto">
+        <pre>{{ randomNumbers }}</pre>
         <div class="flex items-center">
             <label class="m-4">Vitesse</label>
             <input type="number" v-model="speed" step="100"
@@ -95,7 +101,7 @@ const reset = () => {
                     :value="value">
             </cell>
             <Partition
-                    :values="[...Array((nbrOfSound ** subdivision) ).keys()]"
+                    :values="randomNumbers"
                     :nbrOfSound="nbrOfSound"
                     :cellSize="25"
                     :actualValue="value"
