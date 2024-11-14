@@ -13,22 +13,22 @@ const isPlayMetronome = ref(false)
 const isPlaySound = ref(false)
 
 
-const audios = []
-audios.push(range(0, subdivision.value).map(() => {
-    return new Audio('/sounds/kick.mp3')
-}))
-audios.push(range(0, subdivision.value).map(() => {
-    return new Audio('/sounds/snare.mp3')
-}))
+// const audios = []
+// audios.push(range(0, subdivision.value).map(() => {
+//     return new Audio('/sounds/kick.mp3')
+// }))
+// audios.push(range(0, subdivision.value).map(() => {
+//     return new Audio('/sounds/snare.mp3')
+// }))
 
-console.log(audios)
+// console.log(audios)
 
-const metronomes = [
-    new Audio('/sounds/hh.mp3'),
-    new Audio('/sounds/hh.mp3'),
-    new Audio('/sounds/hh.mp3'),
-    new Audio('/sounds/hh.mp3'),
-]
+// const metronomes = [
+//     new Audio('/sounds/hh.mp3'),
+//     new Audio('/sounds/hh.mp3'),
+//     new Audio('/sounds/hh.mp3'),
+//     new Audio('/sounds/hh.mp3'),
+// ]
 
 const startOrStop = () => {
     if (timer.value === 0) {
@@ -90,14 +90,13 @@ const reset = () => {
                     :nbrOfSound="nbrOfSound"
                     :subdivision="subdivision"
                     :size="500"
-                    :audios="audios"
                     :metronomes="metronomes"
                     :value="value">
             </cell>
             <Partition
                     :values="[...Array((nbrOfSound ** subdivision) ).keys()]"
                     :nbrOfSound="nbrOfSound"
-                    :cellSize="25"
+                    :cellSize="30"
                     :actualValue="value"
                     :subdivision="subdivision">
             </Partition>

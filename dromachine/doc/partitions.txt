@@ -1,0 +1,13 @@
+4/4 ||: . o . o | o o o x | o o o o | o o o x :||
+        o . . .   . . . .   . . . .   . . . .
+        . . o .   . . . .   . . . .   . . . .
+        r r l l   r r l r   l l r r   l l r l
+
+
+    4/4
+    | R L L R | L R L R | L L R L | R L L R |
+    | O H T S | T B O O | H T S T | S T . b |
+    | . . . . | . . . . | . . . . | . . O . |
+    | . . . . | . . . . | . . . . | . . . . |
+
+

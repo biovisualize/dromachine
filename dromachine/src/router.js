@@ -16,10 +16,10 @@ export default createRouter({
             path: '/SoundsAndSubdivision',
             component: () => import('./pages/SoundsAndSubdivision.vue'),
         },
-        // {
-        //     path: '/',
-        //     component: () => import('./pages/Home.vue'),
-        // },
+        {
+            path: '/tone',
+            component: () => import('./pages/Tone.vue'),
+        },
     ],
 })
 

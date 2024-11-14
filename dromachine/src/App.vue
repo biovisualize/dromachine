@@ -8,7 +8,8 @@
         <router-link to="/random">Alléatoire</router-link>
         |
         <router-link to="/SoundsAndSubdivision">Sons et subdivision</router-link>
-
+    |
+        <router-link to="/tone">Tone</router-link>
 <!--        <router-link to="/about">About</router-link>-->
 <!--        <router-link to="/contact">Contact</router-link>-->
     </nav>

@@ -1,4 +1,5 @@
 <script>
+import * as Tone from 'tone'
 
 export default {
     props: {
@@ -27,9 +28,7 @@ export default {
             type: [Number, String],
             default: 0,
         },
-        audios: {
-            type: Array,
-        },
+
         metronomes: {
             type: Array,
         },
@@ -70,6 +69,16 @@ export default {
             radius: this.size / 4, // Radius of the circle
             points: [],
             lines: [],
+            notes: [
+                '',
+                'C',
+                'D',
+                'E',
+                'F',
+                'G',
+                'A',
+                'B',
+            ]
         }
     },
 
@@ -108,8 +117,10 @@ export default {
                     startingFrom,
                 }
             })
-        }
+        },
     },
+
+
 
     mounted: function() {
         this.calculatePoints()
@@ -127,10 +138,25 @@ export default {
     },
 
     methods: {
+        test: () => {
+            const synth = new Tone.Synth().toDestination();
+            const now = Tone.now()
+            synth.triggerAttackRelease("C4", "8n", now)
+            synth.triggerAttackRelease("D4", "8n", now + 0.5)
+            synth.triggerAttackRelease("E4", "8n", now + 1)
+            synth.triggerAttackRelease("F4", "8n", now + 1.5)
+            //
+            // synth.triggerAttackRelease("A3", "16n")
+            // synth.triggerAttackRelease("B3", "16n")
+        },
         play(sound, index) {
-            if (this.isPlaySound) {
-                this.audios[sound - 1][index].play();
-            }
+            const synth = new Tone.Synth().toDestination();
+
+           synth.triggerAttackRelease(this.notes[sound] + "4", "8n");
+
+            // if (this.isPlaySound) {
+            //     this.audios[sound - 1][index].play();
+            // }
         },
         playMetronome() {
             this.metronomes[this.value % 2].play();
@@ -171,7 +197,7 @@ export default {
 </script>
 
 <template>
-    <div class="bg-gray-900 p-8 m-8">
+    <div class="bg-gray-900 p-8 m-8 relative">
         <div class="text-white" v-if="displayInfos">
             <div class="m-2 text-center mb-4">Nbr de sons: {{ nbrOfSound }}</div>
             <div class="m-2 text-center mb-4">Subdivision: {{ subdivision }}</div>
@@ -192,7 +218,7 @@ export default {
                 <circle v-for="point in points" :key="point.id" :cx="point.x" :cy="point.y" :r="size / 15"
                         :fill="point.fill"/>
 
-                <rect  v-for="square in squares" stroke="#555" :key="square.index" :x="square.x" :y="square.y"
+                <rect v-for="square in squares" stroke="#555" :key="square.index" :x="square.x" :y="square.y"
                       :height="size / 15" :width="size / 15"
                       :fill="square.fill"/>
             </svg>

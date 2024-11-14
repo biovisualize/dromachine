@@ -50,9 +50,9 @@ const matrix = computed(() => {
 
 <template>
     <div class="mt-4">
-<!--        <span class="text-gray-50">-->
-<!--            [{{ nbrOfSound }}]-->
-<!--        </span>-->
+        <span class="text-gray-50">
+<!--            <pre>{{ matrix }}</pre>-->
+        </span>
         <svg :width="cellSize * subdivision + (cellSize * 2)" :height="cellSize * (nbrOfSound ** subdivision)">
             <circle :cx="cellSize" :cy="(cellSize * actualValue) + (cellSize / 2)" :r="cellSize / 3" fill="white"/>
             <g v-for="(row, index) in matrix" :key="index">
